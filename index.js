@@ -4,6 +4,12 @@ const express = require('express');
 const cors = require('cors')
 const bodyParser = require('body-parser');
 
+// Database configuration
+const dbConfig = require('./config/database.config.js');
+const mongoose = require('mongoose');
+mongoose.Promise = global.Promise;
+
+
 // Create the Express Application [2]
 ////////////////////////////////////////////////////////////////////////
 const app = express();
@@ -31,8 +37,21 @@ app.get('/', (req, res) => {
     });
 });
 
+require('./app/routes/user.routes.js')(app);
+
+
 // Start the server with selected configuration [5]
 ////////////////////////////////////////////////////////////////////////
+
+// Connect to the database
+mongoose.connect(dbConfig.url, dbConfig.options)
+    .then(() => {
+        console.log("Connect to database: success!");
+    }).catch(err => {
+        console.log('Connect to database: failure!: ' + err);
+        process.exit();
+    });
+
 app.listen(port, () => {
     console.log("Server is listening on port " + port);
 });

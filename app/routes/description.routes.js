@@ -10,6 +10,9 @@ module.exports = (app) => {
     // Consultar descripcion de incidencia by id
     app.get('/description/:id', descriptions.findOne);
 
+    // Consultar descripcion de incidencia by userId
+    app.get('/description/user/:id', descriptions.findAllByUserId);
+
     // Update descripcion de incidencia by id
     app.put('/description/:id', descriptions.update);
 

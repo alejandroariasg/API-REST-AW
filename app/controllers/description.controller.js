@@ -44,12 +44,47 @@ exports.findAll = (req, res) => {
             });
                 
 };
+
+// Consultar descripcion de incidencias por userId
+exports.findAllByUserId = (req, res) => {
+    Description.find()
+        .then(descriptions => {
+            const resultado = descriptions.filter( description => description.userid === req.params.id)
+                res.status(200).send(resultado);
+                console.log("Get all descriptions !");
+            }).catch(err => {
+                res.status(500).send({
+                    message: err.message || "Something wrong occurred while retrieving the records."
+                });
+            });
+                
+};
+
+
     
 
 // Get a single Description by its id
 exports.findOne = (req, res) => {
-    console.log("Getting a particular Description ... soon!");
-};
+    Description.findById(req.params.id)
+    .then(description => {
+        if(!description) {
+            return res.status(404).send({
+                message: "Description no encontrado con id:" + req.params.id
+            });
+        }
+        res.status(200).send(description);
+    }).catch(err => {
+        if(err.kind === 'ObjectId') {
+            return res.status(404).send({
+                 message: "Description no encontrado con id:" + req.params.id
+            });
+        }
+
+        return res.status(500).send({
+             message: "Ocurrió algo incorrecto al recuperar el registro con id:"  + req.params.id
+        });
+    });
+};  
 
 
 

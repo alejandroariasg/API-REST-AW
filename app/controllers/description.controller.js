@@ -63,7 +63,7 @@ exports.findAllByUserId = (req, res) => {
 
     
 
-// Get a single Description by its id
+// Get a single Description by  id
 exports.findOne = (req, res) => {
     Description.findById(req.params.id)
     .then(description => {

@@ -1,14 +1,13 @@
 const mongoose = require('mongoose');
 const DescriptionSchema = mongoose.Schema({
     
-            id: {
-                type: Number,
+            userid: {
+                type: String,
                 unique: true,
                 required: true
             },
-            userid: String,
-            latitud: String,
-            longitud: String,
+            latitud: Number,
+            longitud: Number,
             imagen: String,
             descripcion: String,
             tipo: String,

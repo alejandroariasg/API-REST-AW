@@ -25,6 +25,7 @@ exports.create = (req, res) => {
     user.save()
         .then(data => {
             res.status(200).send(data);
+            console.log("Usuario guardado exitosamente")
         }).catch(err => {
             res.status(500).send({
                 message: err.message || "Something wrong occurred while creating the record."

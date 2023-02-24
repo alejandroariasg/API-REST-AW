@@ -1,15 +1,14 @@
 const Description = require('../models/description.model.js');
 
-// Create and save a new Description
+// Crea y guarda una nueva Description
 exports.create = (req, res) => {
-    // Validate if the request's body is empty
-    // (does not include required data)
+
     if(Object.keys(req.body).length === 0) {
             return res.status(400).send({
                 message: "Los datos de descripción no pueden estar vacíos"
         });
     }
-    // Create a new Description with request's data
+    // Guardar una nueva Description con el  request's data
     const description = new Description({
         id: req.body.id,
         userid: req.body.userid,
@@ -21,7 +20,7 @@ exports.create = (req, res) => {
         estado: req.body.estado
     });
     
-    // Save the description in the database
+    // Guarda la description en la base de datos
     description.save()
         .then(data => {
             res.status(200).send(data);
@@ -32,7 +31,7 @@ exports.create = (req, res) => {
         });
 };
 
-// Retrieve and list all Products
+// Lista todas las Description
 exports.findAll = (req, res) => {
     Description.find()
         .then(descriptions => {
@@ -47,24 +46,22 @@ exports.findAll = (req, res) => {
 };
     
 
-
-
-// Get a single Product by its id
+// Get a single Description by its id
 exports.findOne = (req, res) => {
-    console.log("Getting a particular product ... soon!");
+    console.log("Getting a particular Description ... soon!");
 };
 
-// Update a Product by its id
-// Update a Product by its id
+
+
+// Update a Description by its id
 exports.update = (req, res) => {
-    // Validate if the request's body is empty
-    // (does not include required data)
+
     if(Object.keys(req.body).length === 0) {
         return res.status(400).send({
             message: "Description los datos no pueden estar vacios"
         });
     }
-    // Find the Product and update it with the request body data
+
     Description.findByIdAndUpdate(req.params.id, {
         estado: req.body.estado
     }, { new: true })
@@ -92,7 +89,7 @@ exports.update = (req, res) => {
 
 
 
-// Delete a Product by its id
+// Delete a Description by its id
 exports.delete = (req, res) => {
-    console.log("Deleting a particular product ... soon!");
+    console.log("Deleting a Description product ... soon!");
 };

@@ -55,9 +55,43 @@ exports.findOne = (req, res) => {
 };
 
 // Update a Product by its id
+// Update a Product by its id
 exports.update = (req, res) => {
-    console.log("Updating a particular product ... soon!");
+    // Validate if the request's body is empty
+    // (does not include required data)
+    if(Object.keys(req.body).length === 0) {
+        return res.status(400).send({
+            message: "Description los datos no pueden estar vacios"
+        });
+    }
+    // Find the Product and update it with the request body data
+    Description.findByIdAndUpdate(req.params.id, {
+        estado: req.body.estado
+    }, { new: true })
+
+    .then(description => {
+        if(!description) {
+            return res.status(404).send({
+             message: "Description no encontrado con id:" + req.params.id
+            });
+        }
+            res.status(200).send(description);
+    }).catch(err => {
+            if(err.kind === 'ObjectId') {
+                return res.status(404).send({
+                    message: "Description no encontrado con id::" + req.params.id
+                });
+            }
+
+            return res.status(500).send({
+                message: "Ocurrió algo incorrecto al actualizar el registro con id:" +
+                req.params.id
+            });
+        });
 };
+
+
+
 // Delete a Product by its id
 exports.delete = (req, res) => {
     console.log("Deleting a particular product ... soon!");

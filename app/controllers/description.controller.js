@@ -10,7 +10,6 @@ exports.create = (req, res) => {
     }
     // Guardar una nueva Description con el  request's data
     const description = new Description({
-        id: req.body.id,
         userid: req.body.userid,
         latitud: req.body.latitud,
         longitud: req.body.longitud,

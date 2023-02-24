@@ -4,6 +4,9 @@ module.exports = (app) => {
     // Create una nueva descripcion de incidencia
     app.post('/description', descriptions.create);
 
+     // Create una nueva descripcion de incidencia
+     app.post('/descriptionCoordinates', descriptions.findAllByCoordinates);
+
     // Listar todas las descripcion de incidencias
     app.get('/description', descriptions.findAll);
 

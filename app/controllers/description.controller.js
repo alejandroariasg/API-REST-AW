@@ -46,6 +46,32 @@ exports.findAll = (req, res) => {
 };
 
 // Consultar descripcion de incidencias por userId
+exports.findAllByCoordinates = (req, res) => {
+    Description.find({ latitud : { $gt: Number(req.body.latitud)}, longitud : {$lt: Number(req.body.longitud)} }, (erro, descriptionsDB)=>{
+        if (erro) {
+            return res.status(500).json({
+                ok: false,
+                err: erro
+            })
+        }
+        
+        // Verifica que exista un usuario con el mail escrita por el usuario.
+        if (!descriptionsDB.length) {
+            return res.status(400).json({
+                status: false,
+                message: "Datos no encontrados..."
+            })
+        }else{
+            return res.status(200).json({
+                status: true,
+                data: descriptionsDB
+            });
+        }
+    
+    });
+                
+};
+
 exports.findAllByUserId = (req, res) => {
     Description.find()
         .then(descriptions => {
@@ -121,6 +147,8 @@ exports.update = (req, res) => {
             });
         });
 };
+
+
 
 
 

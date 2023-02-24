@@ -42,51 +42,45 @@ exports.login = (req, res) => {
                 message: "User data can not be empty"
         });
     }
-    User.findOne({ email: req.body.correo }, (erro, usuarioDB)=>{
+    User.findOne({ numdocumento: req.body.numdocumento, contrasena :  crypto.createHash('sha256').update(req.body.contrasena).digest('hex') }, (erro, usuarioDB)=>{
         if (erro) {
             return res.status(500).json({
                 ok: false,
                 err: erro
             })
-        } 
-        console.log(usuarioDB);
+        }
+
         // Verifica que exista un usuario con el mail escrita por el usuario.
         if (!usuarioDB) {
             return res.status(400).json({
-                ok: false,
-                err: {
-                    message: "Usuario o contraseña incorrectos"
-                }
+                status: false,
+                message: "Usuario o contraseña incorrectos"
             })
-        }
-
-        // Valida que la contraseña escrita por el usuario, sea la almacenada en la db
-        if (! bcrypt.compareSync(crypto.createHash('sha256').update(req.body.contrasena).digest('hex'), usuarioDB.contrasena)){
-            return res.status(400).json({
-                    ok: false,
-                    err: {
-                        message: "Usuario o contraseña incorrectos"
-                }
+        }else{
+            return res.status(200).json({
+                status: true,
+                message: "Usuario autentificado",
+                data : usuarioDB
             });
         }
-
     
     });
 
 };
 
-// Get a single Product by its id
-exports.findOne = (req, res) => {
-    console.log("Getting a particular product ... soon!");
+// Retrieve and list all Users
+exports.findAll = (req, res) => {
+    User.find()
+        .then(users => {
+            res.status(200).send(users);
+        }).catch(err => {
+            res.status(500).send({
+                message: err.message || "Something wrong occurred while retrieving the records."
+            });
+        });
 };
+   
+   
 
-// Update a Product by its id
-exports.update = (req, res) => {
-    console.log("Updating a particular product ... soon!");
-};
 
-// Delete a Product by its id
-exports.delete = (req, res) => {
-    console.log("Deleting a particular product ... soon!");
-};
    

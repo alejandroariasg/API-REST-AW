@@ -46,7 +46,7 @@ exports.findAll = (req, res) => {
 
 // Consultar descripcion de incidencias por userId
 exports.findAllByCoordinates = (req, res) => {
-    Description.find({ latitud : { $gt: Number(req.body.latitud)}, longitud : {$lt: Number(req.body.longitud)} }, (erro, descriptionsDB)=>{
+    Description.find({ latitud : { $lt: Number(req.body.latitud)}, longitud : {$gt: Number(req.body.longitud)} }, (erro, descriptionsDB)=>{
         if (erro) {
             return res.status(500).json({
                 ok: false,
@@ -145,13 +145,4 @@ exports.update = (req, res) => {
                 req.params.id
             });
         });
-};
-
-
-
-
-
-// Delete a Description by its id
-exports.delete = (req, res) => {
-    console.log("Deleting a Description product ... soon!");
 };

@@ -11,7 +11,10 @@ const UserSchema = mongoose.Schema({
         },
         nombre : String,
         apellidos : String,
-        correo : String,
+        correo : {
+            type: String,
+            unique: true,
+        },
         contrasena : String,
         tipo : Number,
     }, {
@@ -20,4 +23,3 @@ const UserSchema = mongoose.Schema({
 );
 
 module.exports = mongoose.model('User', UserSchema);
-

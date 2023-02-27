@@ -5,10 +5,9 @@ module.exports = (app) => {
     app.post('/users', users.create);
     
     // Login User
-    app.post('/login', users.login);
+    app.get('/login', users.login);
     
+    //Get All Users
     app.get('/users', users.findAll);
-
-    
 
 }

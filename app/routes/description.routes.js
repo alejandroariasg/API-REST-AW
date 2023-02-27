@@ -4,8 +4,8 @@ module.exports = (app) => {
     // Create una nueva descripcion de incidencia
     app.post('/description', descriptions.create);
 
-     // Create una nueva descripcion de incidencia
-     app.post('/descriptionCoordinates', descriptions.findAllByCoordinates);
+     // Buscar incidencias de acuerdo a un rango 
+     app.get('/descriptionCoordinates', descriptions.findAllByCoordinates);
 
     // Listar todas las descripcion de incidencias
     app.get('/description', descriptions.findAll);
@@ -18,9 +18,6 @@ module.exports = (app) => {
 
     // Update descripcion de incidencia by id
     app.put('/description/:id', descriptions.update);
-
-    // Delete descripcion de incidencia by id
-    app.delete('/description/:id', descriptions.delete);
 
 }
    

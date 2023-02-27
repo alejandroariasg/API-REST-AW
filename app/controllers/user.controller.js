@@ -1,6 +1,5 @@
 const User = require('../models/user.model.js');
 const crypto = require('crypto');
-const bcrypt = require('bcrypt');
 
 // Create and save a new User
 exports.create = (req, res) => {
@@ -21,7 +20,7 @@ exports.create = (req, res) => {
         tipo: req.body.tipo || 1
     });
     
-    // Save the Product in the database
+    // Save the User in the database
     user.save()
         .then(data => {
             res.status(200).send(data);
@@ -33,10 +32,9 @@ exports.create = (req, res) => {
         });
 };
 
-// Retrieve and list all Products
+// Retrieve and list all Users
 exports.login = (req, res) => {
     // Validate if the request's body is empty
-    // (does not include required data)
     if(Object.keys(req.body).length === 0) {
             return res.status(400).send({
                 message: "User data can not be empty"
@@ -50,35 +48,23 @@ exports.login = (req, res) => {
             })
         }
 
-        // Verifica que exista un usuario con el mail escrita por el usuario.
+        // Validate that there is a user with document and password specified.
         if (!usuarioDB) {
             return res.status(400).json({
-                status: false,
+                status: "False",
                 message: "Usuario o contraseña incorrectos"
             })
-        }else{
-            return res.status(200).json({
-                status: true,
-                message: "Usuario autentificado",
-                data : usuarioDB
-            });
         }
-    
+        return res.status(200).json({
+            status: "True",
+            message: "Usuario autentificado",
+            data : usuarioDB
+        });
     });
 
 };
 
-// Retrieve and list all Users
-exports.findAll = (req, res) => {
-    User.find()
-        .then(users => {
-            res.status(200).send(users);
-        }).catch(err => {
-            res.status(500).send({
-                message: err.message || "Something wrong occurred while retrieving the records."
-            });
-        });
-};
+
    
    
 
